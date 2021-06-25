@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.openplatform.mapper.CustomerMapper">
+    <insert id="saveCustomer">
+        insert into customer(username, password, nickname, address, money, state)
+        values (#{customer.username},
+                #{customer.password},
+                #{customer.nickname},
+                #{customer.address},
+                #{customer.money},
+                #{customer.state})
+    </insert>
+    <update id="updateCustomer">
+        update customer
+        <set>
+            <if test="customer.username!=null and customer.username!=''">
+                username= #{customer.username},
+            </if>
+            <if test="customer.password!=null and customer.password!=''">
+                password= #{customer.password},
+            </if>
+            <if test="customer.nickname!=null and customer.nickname!=''">
+                nickname= #{customer.nickname},
+            </if>
+            <if test="customer.address!=null and customer.address!=''">
+                address= #{customer.address},
+            </if>
+            <if test="customer.money!=null ">
+                money= #{customer.money},
+            </if>
+            <if test="customer.state!=null">
+                state= #{customer.state}
+            </if>
+        </set>
+        where id=#{customer.id}
+    </update>
+    <delete id="delCustomer">
+        delete from customer where customer.id in
+        <foreach collection="array" item="arr" index="no" open="(" separator="," close=")">
+            #{arr}
+        </foreach>
+    </delete>
+
+    <select id="findCustomer" resultType="Customer">
+        select
+        id,
+        username,
+        password,
+        nickname,
+        address,
+        money,
+        state
+        from customer
+        <where>
+            <if test="username!=null and username!=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="state!=null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+</mapper>
