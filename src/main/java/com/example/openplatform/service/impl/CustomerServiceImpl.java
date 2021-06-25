@@ -44,4 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerMapper.delCustomer(ids) > 0;
     }
 
+    @Override
+    public List<Customer> findAll() {
+        return customerMapper.findCustomer(null, null);
+    }
+
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.openplatform.mapper.AppInfoMapper">
+    <insert id="saveAppInfo">
+        insert into app_info(corpName, appName, appKey, appSecret, redirectUrl, limitCount, description, cusId)
+        VALUES (#{appInfo.corpName},
+                #{appInfo.appName},
+                #{appInfo.appKey},
+                #{appInfo.appSecret},
+                #{appInfo.redirectUrl},
+                #{appInfo.limitCount},
+                #{appInfo.description},
+                #{appInfo.cusId})
+
+    </insert>
+    <update id="updateAppInfo" parameterType="appInfo">
+        update app_info
+        <set>
+            <if test="appInfo.corpName!=null and appInfo.corpName!=''">
+                corpName=#{appInfo.corpName}
+            </if>
+            <if test="appInfo.appName!=null and appInfo.appName!=''">
+                appName=#{appInfo.appName}
+            </if>
+            <if test="appInfo.appKey!=null and appInfo.appKey!=''">
+                appKey=#{appInfo.appKey}
+            </if>
+            <if test="appInfo.appSecret!=null and appInfo.appSecret!=''">
+                appSecret=#{appInfo.appSecret}
+            </if>
+            <if test="appInfo.redirectUrl!=null and appInfo.redirectUrl!=''">
+                redirectUrl=#{appInfo.redirectUrl}
+            </if>
+            <if test="appInfo.limitCount!=null">
+                limitCount=#{appInfo.limitCount}
+            </if>
+            <if test="appInfo.description!=null and appInfo.description!=''">
+                `description`=#{appInfo.description}
+            </if>
+            <if test="appInfo.cusId!=null ">
+                cusId=#{appInfo.cusId}
+            </if>
+            <if test="appInfo.state!=null">
+                state=#{appInfo.state}
+            </if>
+        </set>
+        where id=#{appInfo.id}
+    </update>
+    <delete id="delAppInfo">
+        delete from app_info where id in
+        <foreach collection="array" item="arr" index="no" open="(" separator="," close=")">
+            #{arr}
+        </foreach>
+    </delete>
+
+    <select id="findAppInfo" resultType="AppInfo">
+        select id,corpName,appName,appKey,appSecret,redirectUrl,limitCount,description,cusId,state
+        from app_info
+        <where>
+            <if test="corpName!=null and corpName!=''">
+                and corpName like concat('%',#{corpName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

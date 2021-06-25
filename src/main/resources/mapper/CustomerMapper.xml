@@ -10,7 +10,7 @@
                 #{customer.money},
                 #{customer.state})
     </insert>
-    <update id="updateCustomer">
+    <update id="updateCustomer" parameterType="customer">
         update customer
         <set>
             <if test="customer.username!=null and customer.username!=''">

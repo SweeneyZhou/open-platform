@@ -1,34 +1,27 @@
 package com.example.openplatform.controller;
 
+import com.example.openplatform.entity.AppInfo;
 import com.example.openplatform.entity.Customer;
 import com.example.openplatform.pojo.ResultData;
-import com.example.openplatform.service.CustomerService;
+import com.example.openplatform.service.AppInfoService;
 import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author sweeney
- * @since 2021/06/25 10:18 created.
+ * @since 2021/06/25 11:17 created.
  */
-
 @RestController
-@RequestMapping("/sys/customer")
+@RequestMapping("/sys/app")
 @AllArgsConstructor
-public class CustomerController {
+public class AppInfoController {
 
-    private final CustomerService customerService;
-
-    @GetMapping("/tree")
-    public List<Customer> treeCustomer() {
-        return customerService.findAll();
-    }
+    private final AppInfoService appInfoService;
 
     @GetMapping("/table")
-    public ResultData listCustomer(Integer page, Integer limit, String username, Integer state) {
-        PageInfo<Customer> info = customerService.findCustomer(page, limit, username, state);
+    public ResultData listApp(Integer page, Integer limit, String appName) {
+        PageInfo<AppInfo> info = appInfoService.findCustomer(page, limit, appName);
         return ResultData.builder()
                 .code(0)
                 .count(info.getTotal())
@@ -38,8 +31,8 @@ public class CustomerController {
     }
 
     @PostMapping("/add")
-    public ResultData addCustomer(Customer customer) {
-        if (customerService.saveCustomer(customer))
+    public ResultData addCustomer(AppInfo appInfo) {
+        if (appInfoService.saveAppInfo(appInfo))
             return ResultData.builder()
                     .status(true).message("添加成功").build();
         else
@@ -48,9 +41,9 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public ResultData updateCustomer(Customer customer) {
+    public ResultData updateCustomer(AppInfo appInfo) {
         System.out.println();
-        if (customerService.updateCustomer(customer))
+        if (appInfoService.updateAppInfo(appInfo))
             return ResultData.builder()
                     .status(true).message("修改成功").build();
         else
@@ -60,7 +53,7 @@ public class CustomerController {
 
     @PostMapping("/del")
     public ResultData delCustomer(@RequestParam Integer[] ids) {
-        if (customerService.delCustomer(ids))
+        if (appInfoService.delAppInfo(ids))
             return ResultData.builder()
                     .status(true).message("删除成功").build();
         else
@@ -68,4 +61,3 @@ public class CustomerController {
                     .status(false).message("删除失败").build();
     }
 }
-
