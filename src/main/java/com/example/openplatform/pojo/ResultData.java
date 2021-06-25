@@ -15,6 +15,7 @@ public class ResultData {
     public boolean status;
     public Integer code;
     public Object data;
+    public Object result;
     public String message;
     public String msg;
 }

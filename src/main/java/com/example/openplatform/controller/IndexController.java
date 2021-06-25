@@ -1,7 +1,10 @@
 package com.example.openplatform.controller;
 
 import com.example.openplatform.entity.AdminUser;
+import com.example.openplatform.entity.Menu;
 import com.example.openplatform.pojo.ResultData;
+import com.example.openplatform.service.MenuService;
+import lombok.AllArgsConstructor;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
@@ -19,11 +23,19 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/platform")
+@AllArgsConstructor
 public class IndexController {
 
+    private final MenuService menuService;
+
     @GetMapping("/menus")
-    public String getMenus(){
-        return "spring aop";
+    public ResultData getMenus(HttpSession session) {
+        AdminUser user = (AdminUser) session.getAttribute("user");
+        List<Menu> menus = menuService.getByAdminUserId(user.getId());
+        return ResultData.builder()
+                .result(menus)
+                .status(true)
+                .build();
     }
 
     @PostMapping("/login")

@@ -34,8 +34,8 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/layui/**", "anon");
         chainDefinition.addPathDefinition("/easyui/**", "anon");
         chainDefinition.addPathDefinition("/platform/login","anon");
-        chainDefinition.addPathDefinition("/login.html","anon");
-        chainDefinition.addPathDefinition("/logout","logout");
+        chainDefinition.addPathDefinition("/login.html", "anon");
+        chainDefinition.addPathDefinition("/platform/logout", "logout");
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.openplatform.mapper.MenuMapper">
+    <select id="getByAdminUserId" resultType="Menu">
+        SELECT m.ID,
+               m.name,
+               m.parent_id,
+               m.url,
+               m.icon,
+               m.perms,
+               m.type,
+               m.sort
+        FROM menu m
+                 left join role_menu rm on rm.MENU_ID = m.ID
+                 right join user_role ur on rm.ROLE_ID = ur.ROLE_ID
+        where ur.USER_ID = #{id}
+          and m.type = 1
+        order by m.sort
+    </select>
+</mapper>
