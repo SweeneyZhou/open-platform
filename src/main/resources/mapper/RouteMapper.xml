@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.openplatform.mapper.RouteMapper">
+
+    <select id="find" resultType="Route">
+        select id, gatewayApiName, insideApiUrl, state, description, serviceId, idempotents, needfee
+        from api_mapping
+        <where>
+            <if test="gatewayApiName!=null and gatewayApiName!=''">
+                gatewayApiName like concat("%",#{gatewayApiName},"%")
+            </if>
+            <if test="state !=null">
+                and state!=#{state}
+            </if>
+        </where>
+    </select>
+</mapper>

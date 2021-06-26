@@ -14,4 +14,7 @@ public interface MenuMapper {
 
     @Select("select id,name,parent_id,url,icon,perms,type,sort from menu where parent_id=#{id}")
     List<Menu> getByParentId(Integer id);
+
+    @Select("select id,name,parent_id,url,icon,perms,type,sort from menu")
+    List<Menu> find();
 }

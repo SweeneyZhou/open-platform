@@ -12,7 +12,7 @@ import java.util.Date;
 public class Recharge {
     private Integer id;
     private Integer cusId;
-    private Integer orderId;
+    private Long orderId;
     private Date createtime;
     private Date updatetime;
     private Long money;

@@ -1,6 +1,8 @@
 package com.example.openplatform.service;
 
+import com.example.openplatform.entity.AdminUser;
 import com.example.openplatform.entity.Menu;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -10,4 +12,6 @@ import java.util.List;
  */
 public interface MenuService {
     List<Menu> getByAdminUserId(Integer id);
+
+    PageInfo<Menu> find(Integer page, Integer limit);
 }

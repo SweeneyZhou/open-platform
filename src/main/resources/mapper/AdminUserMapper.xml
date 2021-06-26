@@ -3,8 +3,23 @@
 <mapper namespace="com.example.openplatform.mapper.AdminUserMapper">
 
     <select id="getByEmail" resultType="adminUser">
-        select ID,EMAIL,REAL_NAME,STATUS,PASSWORD
+        select ID, EMAIL, REAL_NAME, STATUS, PASSWORD
         from admin_user
-        where EMAIL =#{email}
+        where EMAIL = #{email}
+    </select>
+    <select id="find" resultType="adminUser">
+        select id, password, email, real_name, status
+        from admin_user
+        <where>
+            <if test="realName!=null and realName!=''">
+                and real_name like concat('%',#{realName},'%')
+            </if>
+            <if test="email!=null and email!=''">
+                and email like concat('%',#{email},'%')
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
     </select>
 </mapper>
